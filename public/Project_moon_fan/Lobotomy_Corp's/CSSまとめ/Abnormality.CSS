@@ -1,0 +1,51 @@
+/* 全体設定 */
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #011;
+}
+
+/* リストのスタイル */
+ul {
+    list-style-type: none;
+}
+
+/* ヘッダーの設定 */
+header {
+    background-color: #f0ffba;
+    width: 100%;
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+}
+
+/* ナビゲーションUI */
+.UI {
+    display: flex;
+    flex-wrap: wrap;
+    font-weight: bold;
+}
+
+.UI li {
+    margin: 0 10px;
+}
+
+/* メイン部分のスタイル */
+main {
+    color: red;
+    margin: 5%;
+}
+
+/* ZAYINの色 */
+#ZAYIN {
+    color: greenyellow;
+}
+
+/* contentクラスのスタイル */
+.content {
+    margin: 0 5%;
+}

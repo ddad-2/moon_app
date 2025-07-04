@@ -1,0 +1,38 @@
+body {
+    
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        background-color: #011;
+}
+
+ul {
+    list-style-type: none;
+}
+
+header {
+    background-color: #f0ffba;
+    width: 100%;
+    height: 156px;
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+}
+.UI {
+    display: flex;
+    flex-wrap: wrap;
+    font-weight: bold;
+}
+
+.UI li {
+    margin: 0 10px;
+}
+
+
+footer {
+    background-color: black;
+}
+

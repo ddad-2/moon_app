@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZAYIN - アブノーマリティ情報</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- 共通ヘッダー -->
+  <header>
+    <h1>
+      <img
+        src="../images/artworks-000413768856-mol7qo-t1080x1080.jpg"
+        alt="ロゴ"
+        width="125"
+      />
+    </h1>
+    <nav>
+      <ul class="UI">
+        <li><a href="./Lobotomy.html">ホーム</a></li>
+        <li><a href="">一覧</a></li>
+        <li><a href="">記録</a></li>
+        <li><a href="">予備</a></li>
+        <li><a href="">予備2</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main id="creature-data">
+    <h2>ZAYIN 区分のアブノーマリティ一覧</h2>
+    <!-- JSでデータをここに表示 -->
+  </main>
+<script>
+  fetch('http://localhost:3000/api/abnormalities/zayin') // ← ここを修正
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('creature-data');
+      container.innerHTML += data.map(abnormality => `
+        <section class="abno-entry">
+          <h3>${abnormality.name} (${abnormality.risk_level})</h3>
+          <p>${abnormality.message}</p>
+        </section>
+      `).join('');
+    })
+    .catch(error => console.error('Error fetching ZAYIN data:', error));
+</script>
+
+</body>
+</html>

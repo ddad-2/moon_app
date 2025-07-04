@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZAYIN - アブノーマリティ情報</title>
+  <link rel="stylesheet" href="list.css" />
+</head>
+<body>
+  <header>
+    <h1>
+      <img
+  src="/Project_moon_fan/images/artworks-000413768856-mol7qo-t1080x1080.jpg"
+  alt="ロゴ"
+  width="125"
+/>
+
+    </h1>
+    <nav>
+      <ul class="UI">
+        <li><a href="/Project_moon_fan/Home.html">ホーム</a></li>
+        <li><a href="">一覧</a></li>
+        <li><a href="">記録</a></li>
+        <li><a href="">予備</a></li>
+        <li><a href="">予備2</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="creature-data">
+  <h1>ZAYIN アブノーマリティ</h1>
+    <!-- ZAYIN区分の情報を表示 -->
+  </main>
+
+  <script>
+    fetch('/api/abnormalities/zayin') // ZAYINに関する情報をAPIで取得
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('creature-data');
+        container.innerHTML = data.map(abnormality => `
+          <section>
+            <h2>${abnormality.name} (${abnormality.risk_level})</h2>
+            <p>${abnormality.message}</p>
+          </section>
+        `).join('');
+      })
+      .catch(error => console.error('Error fetching ZAYIN data:', error));
+  </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>アブノーマリティデータ</title>
+  <link rel="stylesheet" href="../../Lobotomy_Corp's/CSSまとめ/Abnormality.CSS" />
+  <link rel="stylesheet" href="styles.css" /> <!-- 追加したCSSファイル -->
+</head>
+<body>
+  <header>
+    <h1>
+      <img
+          src="../../images/artworks-000413768856-mol7qo-t1080x1080.jpg"
+          alt="ロゴ"
+          width="125"
+        />
+      </h1>
+    <nav>
+      <ul class="UI">
+        <li><a href="../Lobotomy.html">ホーム</a></li>
+        <li><a href="">一覧</a></li>
+        <li><a href="">記録</a></li>
+        <li><a href="">予備</a></li>
+        <li><a href="">予備2</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>アブノーマリティ情報</h1>
+    <div id="creature-data">
+      <p class="loading">読み込み中...</p>
+    </div>
+  </main>
+
+  <script>
+    // XMLデータをJavaScriptで処理
+    fetch('/creatures/1.76mhz_jp.xml')
+      .then(response => {
+        if (!response.ok) throw new Error("ステータスコード: " + response.status);
+        return response.text();
+      })
+      .then(str => {
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(str, "text/xml");
+        const creatureDiv = document.getElementById("creature-data");
+        creatureDiv.innerHTML = ""; // ローディング表示を消す
+
+        // 基本情報
+        const info = xml.querySelector("info");
+        const id = info.getAttribute("id");
+        const narrations = [...info.getElementsByTagName("narration")];
+        const narrationText = narrations.map(n => `<p>${n.textContent}</p>`).join("");
+
+        // 観察データ
+        const observe = xml.querySelector("observe");
+        const collection = observe.querySelector("collection");
+        const name = collection.querySelector("name").textContent.trim();
+        const riskLevel = collection.querySelector("riskLevel").textContent.trim();
+        const openText = collection.querySelector("openText").textContent.trim();
+
+        const descs = [...observe.getElementsByTagName("desc")].map(desc => {
+          const openLevel = desc.getAttribute("openLevel");
+          return `<p><strong>レベル${openLevel}:</strong> ${desc.textContent}</p>`;
+        }).join("");
+
+        const specialTips = [...observe.querySelectorAll("specialTip")].map(tip => {
+          return `<li>${tip.textContent}</li>`;
+        }).join("");
+
+        // HTML生成
+        creatureDiv.innerHTML = `
+          <section>
+            <h2>ID: ${id}</h2>
+            <h3>${name}（リスクレベル: ${riskLevel}）</h3>
+            <p><strong>概要:</strong> ${openText}</p>
+          </section>
+          <section>
+            <h4>ナレーション</h4>
+            ${narrationText || "<p>なし</p>"}
+          </section>
+          <section>
+            <h4>観察データ</h4>
+            ${descs || "<p>データなし</p>"}
+          </section>
+          <section>
+            <h4>特殊ヒント</h4>
+            <ul>${specialTips || "<li>なし</li>"}</ul>
+          </section>
+        `;
+      })
+      .catch(error => {
+        document.getElementById("creature-data").innerHTML =
+          `<p class="error">XML読み込みエラー: ${error.message}</p>`;
+        console.error(error);
+      });
+  </script>
+</body>
+</html>
